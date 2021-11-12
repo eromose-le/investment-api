@@ -1,0 +1,22 @@
+[
+  {
+    "coin": "bitcoin",
+    "abbr": "BTC",
+    "address": "btc-ajGKUjsbkud7TKGusbukas2"
+  },
+  {
+    "coin": "ethereum",
+    "abbr": "ETH",
+    "address": "eth-ajGKUjsbkud7TKGusbukas2"
+  },
+  {
+    "coin": "bitcoin cash",
+    "abbr": "BCH",
+    "address": "bch-ajGKUjsbkud7TKGusbukas2"
+  },
+  {
+    "coin": "litecoin",
+    "abbr": "LTC",
+    "address": "lte-ajGKUjsbkud7TKGusbukas2"
+  }
+]

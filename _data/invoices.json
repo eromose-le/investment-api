@@ -1,0 +1,12 @@
+[
+  {
+    "invoiceId": "#INV0110-6k27b-45",
+    "investorClass": "Emerald",
+    "tradeNature": "Constant dynamic -CD",
+    "tradeDuration": "44 Days",
+    "accumulatedCost": "16,430.00",
+    "estimatedAmount": "1,000,000.00",
+    "estimatedDate": "Nov 2, 2021 15:37:25",
+    "invoiceDueDate": "Oct 14, 2021 2pm PT"
+  }
+]

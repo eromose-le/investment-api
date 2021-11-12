@@ -1,0 +1,10 @@
+[
+  {
+    "firstName": "developerFirstname",
+    "lastNAme": "developerLastname",
+    "email": "developer@gmail.com",
+    "password": "123456",
+    "country": "Nigeria",
+    "phoneNumber": "12345678902"
+  }
+]
