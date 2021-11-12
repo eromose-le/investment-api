@@ -4,6 +4,7 @@ const Transaction = require('../models/Transaction');
 
 // @desc    Get all transactions
 // @route   GET /api/v1/transactions
+// @route   GET /api/v1/coins/:coinsId/transactions
 // @access  Private
 exports.getTransactions = asyncHandler(async (req, res, next) => {
   const transactions = await Transaction.find();
