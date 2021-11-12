@@ -21,6 +21,7 @@ dotenv.config({ path: './config/config.env' });
 connectDB();
 
 // Route files
+const coins = require('./routes/coins');
 const transactions = require('./routes/transactions');
 
 const app = express();
@@ -35,6 +36,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Mount routes
+app.use('/api/v1/coins', coins);
 app.use('/api/v1/transactions', transactions);
 
 app.use(errorHandler);

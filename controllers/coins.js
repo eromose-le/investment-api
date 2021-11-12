@@ -5,7 +5,7 @@ const Coin = require('../models/Coin');
 // @desc    Get all coins
 // @route   GET /api/v1/coins
 // @access  Private
-exports.getTransactions = asyncHandler(async (req, res, next) => {
+exports.getCoins = asyncHandler(async (req, res, next) => {
   const coins = await Coin.find();
   res.status(200).json({
     success: true,
@@ -18,7 +18,7 @@ exports.getTransactions = asyncHandler(async (req, res, next) => {
 // @desc    Get single coin
 // @route   GET /api/v1/coins/:id
 // @access  Private
-exports.getTransaction = asyncHandler(async (req, res, next) => {
+exports.getCoin = asyncHandler(async (req, res, next) => {
   const coin = await Coin.findById(req.params.id);
 
   if (!coin) {
@@ -35,7 +35,7 @@ exports.getTransaction = asyncHandler(async (req, res, next) => {
 // @desc    Create new coin
 // @route   POST /api/v1/coins
 // @access  Private
-exports.createTransaction = asyncHandler(async (req, res, next) => {
+exports.createCoin = asyncHandler(async (req, res, next) => {
   const coin = await Coin.create(req.body);
   console.log(coin);
   res.status(201).json({
@@ -48,7 +48,7 @@ exports.createTransaction = asyncHandler(async (req, res, next) => {
 // @desc    Update coin
 // @route   PUT /api/v1/coins/:id
 // @access  Private
-exports.updateTransaction = asyncHandler(async (req, res, next) => {
+exports.updateCoin = asyncHandler(async (req, res, next) => {
   const coin = await Coin.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true
@@ -70,7 +70,7 @@ exports.updateTransaction = asyncHandler(async (req, res, next) => {
 // @desc    Delete coin
 // @route   DELETE /api/v1/coins/:id
 // @access  Private
-exports.deleteTransaction = asyncHandler(async (req, res, next) => {
+exports.deleteCoin = asyncHandler(async (req, res, next) => {
   const coin = await Coin.findByIdAndRemove(req.params.id);
 
   if (!coin) {
