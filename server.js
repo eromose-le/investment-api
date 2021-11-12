@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const errorHandler = require('./middleware/error');
 
 // custom logger
 // const logger = require('./middleware/logger');
@@ -35,6 +36,8 @@ if (process.env.NODE_ENV === 'development') {
 
 // Mount routes
 app.use('/api/v1/transactions', transactions);
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 

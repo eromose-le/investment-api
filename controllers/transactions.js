@@ -1,3 +1,4 @@
+const ErrorResponse = require('../utils/errorResponse');
 const Transaction = require('../models/Transaction');
 
 // @desc    Get all transactions
@@ -13,7 +14,7 @@ exports.getTransactions = async (req, res, next) => {
       data: transactions
     });
   } catch (err) {
-    res.status(400).json({ success: false });
+    next(err);
   }
 };
 
@@ -25,15 +26,19 @@ exports.getTransaction = async (req, res, next) => {
     const transaction = await Transaction.findById(req.params.id);
 
     if (!transaction) {
-      return res.status(400).json({ success: false });
+      return next(
+        new ErrorResponse(
+          `Transaction not found with id of ${req.params.id}`,
+          404
+        )
+      );
     }
     res.status(200).json({
       success: true,
-      msg: `Fetched transaction ${req.params.id}`,
       data: transaction
     });
   } catch (err) {
-    res.status(400).json({ success: false });
+    next(err);
   }
 };
 
@@ -50,7 +55,7 @@ exports.createTransaction = async (req, res, next) => {
       data: transaction
     });
   } catch (err) {
-    res.status(400).json({ success: false });
+    next(err);
   }
 };
 
@@ -69,15 +74,21 @@ exports.updateTransaction = async (req, res, next) => {
     );
 
     if (!transaction) {
-      return res.status(400).json({ success: false });
+      return next(
+        new ErrorResponse(
+          `Transaction not found with id of ${req.params.id}`,
+          404
+        )
+      );
     }
+
     res.status(200).json({
       success: true,
       msg: `Updated transaction ${req.params.id}`,
       data: transaction
     });
   } catch (err) {
-    res.status(400).json({ success: false });
+    next(err);
   }
 };
 
@@ -89,7 +100,12 @@ exports.deleteTransaction = async (req, res, next) => {
     const transaction = await Transaction.findByIdAndRemove(req.params.id);
 
     if (!transaction) {
-      return res.status(400).json({ success: false });
+      return next(
+        new ErrorResponse(
+          `Transaction not found with id of ${req.params.id}`,
+          404
+        )
+      );
     }
 
     res.status(200).json({
@@ -98,6 +114,6 @@ exports.deleteTransaction = async (req, res, next) => {
       data: {}
     });
   } catch (err) {
-    return res.status(400).json({ success: false });
+    next(err);
   }
 };
