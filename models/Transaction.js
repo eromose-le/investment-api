@@ -1,17 +1,17 @@
 const mongoose = require('mongoose');
 
 const TransactionSchema = new mongoose.Schema({
-  addresstype: {
+  addressType: {
     type: String,
     required: [true, 'Please add wallet address name'],
-    maxlength: [50, 'Name cannot be more then 50 characters']
+    maxlength: [80, 'Name cannot be more then 50 characters']
   },
   amountBtc: {
-    type: Number,
+    type: String,
     required: [true, 'Please add BTC equavilent Amount']
   },
   valueUsd: {
-    type: Number,
+    type: String,
     required: [true, 'Please add USD amount equavilent']
   },
   transactionNature: {

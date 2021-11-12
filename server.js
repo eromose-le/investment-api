@@ -24,6 +24,9 @@ const transactions = require('./routes/transactions');
 
 const app = express();
 
+// Body Parser
+app.use(express.json());
+
 // Dev logging middleware
 // app.use(logger);
 if (process.env.NODE_ENV === 'development') {
