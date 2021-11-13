@@ -20,6 +20,11 @@ const TransactionSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now
+  },
+  coin: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Coin',
+    required: true
   }
 });
 

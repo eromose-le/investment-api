@@ -4,13 +4,21 @@ const Transaction = require('../models/Transaction');
 
 // @desc    Get all transactions
 // @route   GET /api/v1/transactions
-// @route   GET /api/v1/coins/:coinsId/transactions
+// @route   GET /api/v1/coins/:coinId/transactions
 // @access  Private
 exports.getTransactions = asyncHandler(async (req, res, next) => {
-  const transactions = await Transaction.find();
+  let query;
+
+  if (req.params.coinId) {
+    query = Transaction.find({ coin: req.params.coinId });
+  } else {
+    query = Transaction.find();
+  }
+
+  const transactions = await query;
+
   res.status(200).json({
     success: true,
-    msg: 'Fetched all transactions',
     count: transactions.length,
     data: transactions
   });
