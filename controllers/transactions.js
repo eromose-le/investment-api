@@ -8,24 +8,23 @@ const Coin = require('../models/Coin');
 // @route   GET /api/v1/coins/:coinId/transactions
 // @access  Private
 exports.getTransactions = asyncHandler(async (req, res, next) => {
-  let query;
-
   if (req.params.coinId) {
-    query = Transaction.find({ coin: req.params.coinId }).populate('coin');
-  } else {
-    query = Transaction.find().populate({
-      path: 'coin',
-      select: 'coin abbr'
+    // get single transaction
+    const transactions = await Transaction.find({ coin: req.params.coinId });
+
+    // with pagination
+    // return res.status(200).json(res.advancedResults);
+
+    // without pagination
+    return res.status(200).json({
+      success: true,
+      count: transactions.length,
+      data: transactions
     });
+  } else {
+    // get all transactions
+    res.status(200).json(res.advancedResults);
   }
-
-  const transactions = await query;
-
-  res.status(200).json({
-    success: true,
-    count: transactions.length,
-    data: transactions
-  });
 });
 
 // @desc    Get single transaction

@@ -7,9 +7,22 @@ const {
   deleteTransaction
 } = require('../controllers/transactions');
 
+// Bring in model
+const Transaction = require('../models/Transaction');
+const advancedResults = require('../middleware/advancedResults');
+
 const router = express.Router({ mergeParams: true });
 
-router.route('/').get(getTransactions).post(createTransaction);
+router
+  .route('/')
+  .get(
+    advancedResults(Transaction, {
+      path: 'coin',
+      select: 'coin abbr'
+    }),
+    getTransactions
+  )
+  .post(createTransaction);
 router
   .route('/:id')
   .get(getTransaction)
