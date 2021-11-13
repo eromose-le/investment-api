@@ -71,13 +71,15 @@ exports.updateCoin = asyncHandler(async (req, res, next) => {
 // @route   DELETE /api/v1/coins/:id
 // @access  Private
 exports.deleteCoin = asyncHandler(async (req, res, next) => {
-  const coin = await Coin.findByIdAndRemove(req.params.id);
+  const coin = await Coin.findById(req.params.id);
 
   if (!coin) {
     return next(
       new ErrorResponse(`Coin not found with id of ${req.params.id}`, 404)
     );
   }
+
+  coin.remove();
 
   res.status(200).json({
     success: true,
