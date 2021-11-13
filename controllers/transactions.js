@@ -12,7 +12,10 @@ exports.getTransactions = asyncHandler(async (req, res, next) => {
   if (req.params.coinId) {
     query = Transaction.find({ coin: req.params.coinId }).populate('coin');
   } else {
-    query = Transaction.find().populate('coin');
+    query = Transaction.find().populate({
+      path: 'coin',
+      select: 'coin abbr'
+    });
   }
 
   const transactions = await query;
