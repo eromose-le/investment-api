@@ -10,9 +10,9 @@ exports.getTransactions = asyncHandler(async (req, res, next) => {
   let query;
 
   if (req.params.coinId) {
-    query = Transaction.find({ coin: req.params.coinId });
+    query = Transaction.find({ coin: req.params.coinId }).populate('coin');
   } else {
-    query = Transaction.find();
+    query = Transaction.find().populate('coin');
   }
 
   const transactions = await query;
