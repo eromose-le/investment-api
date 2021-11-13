@@ -1,6 +1,7 @@
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 const Transaction = require('../models/Transaction');
+const Coin = require('../models/Coin');
 
 // @desc    Get all transactions
 // @route   GET /api/v1/transactions
@@ -31,7 +32,10 @@ exports.getTransactions = asyncHandler(async (req, res, next) => {
 // @route   GET /api/v1/transactions/:id
 // @access  Private
 exports.getTransaction = asyncHandler(async (req, res, next) => {
-  const transaction = await Transaction.findById(req.params.id);
+  const transaction = await Transaction.findById(req.params.id).populate({
+    path: 'coin',
+    select: 'name abbr'
+  });
 
   if (!transaction) {
     return next(
@@ -49,10 +53,21 @@ exports.getTransaction = asyncHandler(async (req, res, next) => {
 
 // @desc    Create new transaction
 // @route   POST /api/v1/transactions
+// @route   POST /api/v1/coins/:coinsId/transactions
 // @access  Private
 exports.createTransaction = asyncHandler(async (req, res, next) => {
+  req.body.coin = req.params.coinId;
+
+  const coin = await Coin.findById(req.params.coinId);
+
+  if (!coin) {
+    return next(
+      new ErrorResponse(`Coin not found with id of ${req.params.coinId}`, 404)
+    );
+  }
+
   const transaction = await Transaction.create(req.body);
-  console.log(transaction);
+
   res.status(201).json({
     success: true,
     msg: 'Createed new transaction',
