@@ -79,14 +79,7 @@ exports.createTransaction = asyncHandler(async (req, res, next) => {
 // @route   PUT /api/v1/transactions/:id
 // @access  Private
 exports.updateTransaction = asyncHandler(async (req, res, next) => {
-  const transaction = await Transaction.findByIdAndUpdate(
-    req.params.id,
-    req.body,
-    {
-      new: true,
-      runValidators: true
-    }
-  );
+  let transaction = await Transaction.findById(req.params.id);
 
   if (!transaction) {
     return next(
@@ -97,9 +90,13 @@ exports.updateTransaction = asyncHandler(async (req, res, next) => {
     );
   }
 
+  transaction = await Transaction.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true
+  });
+
   res.status(200).json({
     success: true,
-    msg: `Updated transaction ${req.params.id}`,
     data: transaction
   });
 });
@@ -108,7 +105,7 @@ exports.updateTransaction = asyncHandler(async (req, res, next) => {
 // @route   DELETE /api/v1/transactions/:id
 // @access  Private
 exports.deleteTransaction = asyncHandler(async (req, res, next) => {
-  const transaction = await Transaction.findByIdAndRemove(req.params.id);
+  const transaction = await Transaction.findById(req.params.id);
 
   if (!transaction) {
     return next(
@@ -119,9 +116,10 @@ exports.deleteTransaction = asyncHandler(async (req, res, next) => {
     );
   }
 
+  await transaction.remove();
+
   res.status(200).json({
     success: true,
-    msg: `Deleted transaction ${req.params.id}`,
     data: {}
   });
 });
