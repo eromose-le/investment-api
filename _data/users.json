@@ -1,7 +1,7 @@
 [
   {
     "firstName": "developerFirstname",
-    "lastNAme": "developerLastname",
+    "lastName": "developerLastname",
     "email": "developer@gmail.com",
     "password": "123456",
     "country": "Nigeria",
