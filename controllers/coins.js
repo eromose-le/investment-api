@@ -6,13 +6,7 @@ const Coin = require('../models/Coin');
 // @route   GET /api/v1/coins
 // @access  Private
 exports.getCoins = asyncHandler(async (req, res, next) => {
-  const coins = await Coin.find();
-  res.status(200).json({
-    success: true,
-    msg: 'Fetched all coins',
-    count: coins.length,
-    data: coins
-  });
+  res.status(200).json(res.advancedResults);
 });
 
 // @desc    Get single coin
