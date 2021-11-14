@@ -11,6 +11,13 @@ const UserSchema = new mongoose.Schema({
   lastName: {
     type: String
   },
+  profilePhoto: {
+    type: String
+  },
+  gender: {
+    type: String,
+    eunm: ['male', 'female']
+  },
   email: {
     type: String,
     required: [true, 'Please add an email'],
