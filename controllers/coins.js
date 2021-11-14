@@ -30,11 +30,15 @@ exports.getCoin = asyncHandler(async (req, res, next) => {
 // @route   POST /api/v1/coins
 // @access  Private
 exports.createCoin = asyncHandler(async (req, res, next) => {
+  console.log(req.user.id);
+  // Add user to req.body
+  req.body.user = req.user.id;
+
   const coin = await Coin.create(req.body);
-  console.log(coin);
+
   res.status(201).json({
     success: true,
-    msg: 'Createed new coin',
+    msg: 'Created new coin',
     data: coin
   });
 });
@@ -43,16 +47,28 @@ exports.createCoin = asyncHandler(async (req, res, next) => {
 // @route   PUT /api/v1/coins/:id
 // @access  Private
 exports.updateCoin = asyncHandler(async (req, res, next) => {
-  const coin = await Coin.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true
-  });
+  let coin = await Coin.findById(req.params.id);
 
   if (!coin) {
     return next(
       new ErrorResponse(`Coin not found with id of ${req.params.id}`, 404)
     );
   }
+
+  // Make sure user is coin owner
+  if (coin.user.toString() !== req.user.id && req.user.role !== 'developer') {
+    return next(
+      new ErrorResponse(
+        `User ${req.params.id} is not authorized to update this coin`,
+        401
+      )
+    );
+  }
+
+  coin = await Coin.findOneAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true
+  });
 
   res.status(200).json({
     success: true,
@@ -70,6 +86,16 @@ exports.deleteCoin = asyncHandler(async (req, res, next) => {
   if (!coin) {
     return next(
       new ErrorResponse(`Coin not found with id of ${req.params.id}`, 404)
+    );
+  }
+
+  // Make sure user is coin owner
+  if (coin.user.toString() !== req.user.id && req.user.role !== 'developer') {
+    return next(
+      new ErrorResponse(
+        `User ${req.params.id} is not authorized to delete this coin`,
+        401
+      )
     );
   }
 
