@@ -56,6 +56,7 @@ exports.getTransaction = asyncHandler(async (req, res, next) => {
 // @access  Private
 exports.createTransaction = asyncHandler(async (req, res, next) => {
   req.body.coin = req.params.coinId;
+  req.body.user = req.user.id;
 
   const coin = await Coin.findById(req.params.coinId);
 
@@ -65,11 +66,21 @@ exports.createTransaction = asyncHandler(async (req, res, next) => {
     );
   }
 
+  // Make sure user is coin owner
+  // if (coin.user.toString() !== req.user.id && req.user.role !== 'admin') {
+  //   return next(
+  //     new ErrorResponse(
+  //       `User ${req.user.id} is not authorized to add a transaction coin ${coin._id}`,
+  //       401
+  //     )
+  //   );
+  // }
+
   const transaction = await Transaction.create(req.body);
 
   res.status(201).json({
     success: true,
-    msg: 'Createed new transaction',
+    msg: 'Created new transaction',
     data: transaction
   });
 });
@@ -88,6 +99,16 @@ exports.updateTransaction = asyncHandler(async (req, res, next) => {
       )
     );
   }
+
+  // Make sure user is transaction owner
+  // if (transaction.user.toString() !== req.user.id && req.user.role !== 'admin') {
+  //   return next(
+  //     new ErrorResponse(
+  //       `User ${req.user.id} is not authorized to update transaction ${transaction._id}`,
+  //       401
+  //     )
+  //   );
+  // }
 
   transaction = await Transaction.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
@@ -114,6 +135,19 @@ exports.deleteTransaction = asyncHandler(async (req, res, next) => {
       )
     );
   }
+
+  // Make sure user is transaction owner
+  // if (
+  //   transaction.user.toString() !== req.user.id &&
+  //   req.user.role !== 'admin'
+  // ) {
+  //   return next(
+  //     new ErrorResponse(
+  //       `User ${req.user.id} is not authorized to delete transaction ${transaction._id}`,
+  //       401
+  //     )
+  //   );
+  // }
 
   await transaction.remove();
 

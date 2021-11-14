@@ -30,9 +30,18 @@ exports.getCoin = asyncHandler(async (req, res, next) => {
 // @route   POST /api/v1/coins
 // @access  Private
 exports.createCoin = asyncHandler(async (req, res, next) => {
-  console.log(req.user.id);
   // Add user to req.body
   req.body.user = req.user.id;
+
+  // If the user is not an developer, they can not add coin
+  if (req.user.role !== 'developer') {
+    return next(
+      new ErrorResponse(
+        `The user with ID ${req.user.id} is not autorized to create Coin!.`,
+        400
+      )
+    );
+  }
 
   const coin = await Coin.create(req.body);
 

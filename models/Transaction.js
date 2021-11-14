@@ -25,6 +25,11 @@ const TransactionSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Coin',
     required: true
+  },
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: true
   }
 });
 
