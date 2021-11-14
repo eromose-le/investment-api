@@ -1,12 +1,12 @@
 [
   {
-    "walletAddress": "1-eaa3e79a60a07fcc426ef4ee7eec9102e8b4ab48c800aeab97a906e8d2148399",
+    "walletAddress": "NEW-eaa3e79a60a07fcc426ef4ee7eec9102e8b4ab48c800aeab97a906e8d2148399",
     "amountBtc": "1.45667676",
     "valueUsd": "80,009.06",
     "transactionNature": "CR"
   },
   {
-    "walletAddress": "2-eaa3e79a60a07fcc426ef4ee7eec9102e8b4ab48c800aeab97a906e8d2148399",
+    "walletAddress": "ORIGINAL-eaa3e79a60a07fcc426ef4ee7eec9102e8b4ab48c800aeab97a906e8d2148399",
     "amountBtc": "1.45667676",
     "valueUsd": "80,009.06",
     "transactionNature": "CR"

@@ -15,14 +15,20 @@ const transactionRouter = require('./transactions');
 
 const router = express.Router();
 
+const { protect, authorize } = require('../middleware/auth');
+
 // Re-route into other resource routers
 router.use('/:coinId/transactions', transactionRouter);
 
 router
   .route('/')
   .get(advancedResults(Coin, 'transactions'), getCoins)
-  .post(createCoin);
+  .post(protect, authorize('developer'), createCoin);
 
-router.route('/:id').get(getCoin).put(updateCoin).delete(deleteCoin);
+router
+  .route('/:id')
+  .get(getCoin)
+  .put(protect, authorize('developer'), updateCoin)
+  .delete(protect, authorize('developer'), deleteCoin);
 
 module.exports = router;

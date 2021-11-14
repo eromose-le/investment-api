@@ -7,7 +7,7 @@ const dotenv = require('dotenv');
 dotenv.config({ path: './config/config.env' });
 
 // Load models
-const Transaction = require('./models/Transaction');
+// const Transaction = require('./models/Transaction');
 const Coin = require('./models/Coin');
 
 // Connect to DB
@@ -17,9 +17,9 @@ mongoose.connect(process.env.MONGO_URI, {
 });
 
 // Read JSON files
-const transactions = JSON.parse(
-  fs.readFileSync(`${__dirname}/_data/transactions.json`, 'utf-8')
-);
+// const transactions = JSON.parse(
+//   fs.readFileSync(`${__dirname}/_data/transactions.json`, 'utf-8')
+// );
 
 const coins = JSON.parse(
   fs.readFileSync(`${__dirname}/_data/coins.json`, 'utf-8')
@@ -28,7 +28,7 @@ const coins = JSON.parse(
 // Import into DB
 const importData = async () => {
   try {
-    await Transaction.create(transactions);
+    // await Transaction.create(transactions);
     await Coin.create(coins);
     console.log('Data Imported...'.green.inverse);
     process.exit();
@@ -40,7 +40,7 @@ const importData = async () => {
 // Delete data
 const deleteData = async () => {
   try {
-    await Transaction.deleteMany();
+    // await Transaction.deleteMany();
     await Coin.deleteMany();
     console.log('Data Destroyed...'.red.inverse);
     process.exit();

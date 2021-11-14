@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const errorHandler = require('./middleware/error');
+const cookieParser = require('cookie-parser');
 
 // custom logger
 // const logger = require('./middleware/logger');
@@ -23,11 +24,15 @@ connectDB();
 // Route files
 const coins = require('./routes/coins');
 const transactions = require('./routes/transactions');
+const auth = require('./routes/auth');
 
 const app = express();
 
 // Body Parser
 app.use(express.json());
+
+// Cookie parser
+app.use(cookieParser());
 
 // Dev logging middleware
 // app.use(logger);
@@ -38,6 +43,7 @@ if (process.env.NODE_ENV === 'development') {
 // Mount routes
 app.use('/api/v1/coins', coins);
 app.use('/api/v1/transactions', transactions);
+app.use('/api/v1/auth', auth);
 
 app.use(errorHandler);
 

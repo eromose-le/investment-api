@@ -5,6 +5,14 @@
     "email": "developer@gmail.com",
     "password": "123456",
     "country": "Nigeria",
-    "phoneNumber": "12345678902"
+    "phoneNumber": "0912345678902"
+  },
+  {
+    "firstName": "userFirstname",
+    "lastName": "userLastname",
+    "email": "user@gmail.com",
+    "password": "123456",
+    "country": "Ghana",
+    "phoneNumber": "223245678902"
   }
 ]
