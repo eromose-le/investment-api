@@ -3,6 +3,13 @@ const dotenv = require('dotenv');
 const errorHandler = require('./middleware/error');
 const cookieParser = require('cookie-parser');
 
+const mongoSanitize = require('express-mongo-sanitize');
+const helmet = require('helmet');
+const xss = require('xss-clean');
+const rateLimit = require('express-rate-limit');
+const hpp = require('hpp');
+const cors = require('cors');
+
 // custom logger
 // const logger = require('./middleware/logger');
 
@@ -41,6 +48,28 @@ app.use(cookieParser());
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
+
+// Sanitize data
+app.use(mongoSanitize());
+
+// Set security headers
+app.use(helmet());
+
+// Prevent XSS attacks
+app.use(xss());
+
+// Rate limiting
+const limiter = rateLimit({
+  window: 10 * 60 * 1000, // 10 minutes
+  max: 100 // number of requests per 10 minutes
+});
+app.use(limiter);
+
+// Prevent http param pollution
+app.use(hpp());
+
+// Enable CORS
+app.use(cors());
 
 // Mount routes
 app.use('/api/v1/coins', coins);
