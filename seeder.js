@@ -11,7 +11,7 @@ dotenv.config({ path: './config/config.env' });
 const Coin = require('./models/Coin');
 
 // Connect to DB
-mongoose.connect(process.env.MONGO_URI, {
+mongoose.connect(process.env.MONGO_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
