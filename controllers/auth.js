@@ -23,6 +23,21 @@ exports.register = asyncHandler(async (req, res, next) => {
     role
   });
 
+  const userWalletAddress = user._id.toString();
+  const message = `<h1>Your wallet Address is: \n\n ${userWalletAddress} </h1>`;
+
+  try {
+    await sendEmail({
+      email: user.email,
+      subject: 'Welcome, Wallet Address',
+      message
+    });
+
+    return res.status(200).json({ success: true, data: 'Email sent' });
+  } catch (err) {
+    return next(new ErrorResponse('Email could not be sent', 500));
+  }
+
   sendTokenResponse(user, 200, res);
 });
 
