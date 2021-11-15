@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const dotenv = require('dotenv');
 const errorHandler = require('./middleware/error');
@@ -70,6 +71,9 @@ app.use(hpp());
 
 // Enable CORS
 app.use(cors());
+
+// Set static folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Mount routes
 app.use('/api/v1/coins', coins);
