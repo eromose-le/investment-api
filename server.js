@@ -25,6 +25,7 @@ connectDB();
 const coins = require('./routes/coins');
 const transactions = require('./routes/transactions');
 const invoices = require('./routes/invoices');
+const users = require('./routes/users');
 const auth = require('./routes/auth');
 
 const app = express();
@@ -45,6 +46,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use('/api/v1/coins', coins);
 app.use('/api/v1/transactions', transactions);
 app.use('/api/v1/invoices', invoices);
+app.use('/api/v1/users', users);
 app.use('/api/v1/auth', auth);
 
 app.use(errorHandler);

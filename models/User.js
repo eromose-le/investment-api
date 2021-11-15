@@ -44,6 +44,10 @@ const UserSchema = new mongoose.Schema({
   phoneNumber: {
     type: String
   },
+  isTradeNotification: {
+    type: Boolean,
+    default: false
+  },
   resetPasswordToken: String,
   resetPasswordExpire: Date,
   createdAt: {
