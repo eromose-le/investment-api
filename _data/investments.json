@@ -1,0 +1,26 @@
+[
+  {
+    "investmentTitle": "Silver node",
+    "investmentPlan": "economy plan",
+    "investorUsername": "Sabinus",
+    "minBuy": "1000",
+    "withdrawable": "14",
+    "investAmount": "..."
+  },
+  {
+    "investmentTitle": "Gold node",
+    "investmentPlan": "Pro plan",
+    "investorUsername": "Billionia Prince",
+    "minBuy": "5000",
+    "withdrawable": "10",
+    "investAmount": "..."
+  },
+  {
+    "investmentTitle": "platinum node",
+    "investmentPlan": "Emerald plan",
+    "investorUsername": "Mc Maccaroni",
+    "minBuy": "10000",
+    "withdrawable": "6",
+    "investAmount": "..."
+  }
+]

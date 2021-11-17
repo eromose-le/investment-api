@@ -56,6 +56,9 @@ exports.createInvoice = asyncHandler(async (req, res, next) => {
 // @route   PUT /api/v1/invoices/:id
 // @access  Private
 exports.updateInvoice = asyncHandler(async (req, res, next) => {
+  // Add user to req.body
+  req.body.user = req.user.id;
+
   let invoice = await Invoice.findById(req.params.id);
 
   if (!invoice) {
@@ -64,7 +67,7 @@ exports.updateInvoice = asyncHandler(async (req, res, next) => {
     );
   }
 
-  // Make sure user is invoice owner
+  // Make sure user is invoice owner or admin
   if (req.user.role !== 'admin') {
     return next(
       new ErrorResponse(
@@ -90,6 +93,9 @@ exports.updateInvoice = asyncHandler(async (req, res, next) => {
 // @route   DELETE /api/v1/invoices/:id
 // @access  Private
 exports.deleteInvoice = asyncHandler(async (req, res, next) => {
+  // Add user to req.body
+  req.body.user = req.user.id;
+
   const invoice = await Invoice.findById(req.params.id);
 
   if (!invoice) {
