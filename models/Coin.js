@@ -11,6 +11,9 @@ const CoinSchema = new mongoose.Schema(
     address: {
       type: String
     },
+    img: {
+      type: String
+    },
     createdAt: {
       type: Date,
       default: Date.now
@@ -18,6 +21,11 @@ const CoinSchema = new mongoose.Schema(
     user: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
+      required: true
+    },
+    transaction: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Transaction',
       required: true
     }
   },

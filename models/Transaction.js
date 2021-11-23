@@ -21,6 +21,10 @@ const TransactionSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
+  owner: {
+    type: String,
+    required: [true, "Please add owner's Id"]
+  },
   coin: {
     type: mongoose.Schema.ObjectId,
     ref: 'Coin',

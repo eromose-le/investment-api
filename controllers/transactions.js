@@ -10,7 +10,12 @@ const Coin = require('../models/Coin');
 exports.getTransactions = asyncHandler(async (req, res, next) => {
   if (req.params.coinId) {
     // get single transaction
-    const transactions = await Transaction.find({ coin: req.params.coinId });
+    const transactions = await Transaction.find({
+      coin: req.params.coinId
+    }).populate({
+      path: 'coin',
+      select: 'name abbr'
+    });
 
     // with pagination
     // return res.status(200).json(res.advancedResults);

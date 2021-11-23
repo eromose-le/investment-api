@@ -28,7 +28,7 @@ router
   .post(protect, createTransaction);
 router
   .route('/:id')
-  .get(protect, getTransaction)
+  .get(protect, advancedResults(Transaction, 'coin'), getTransaction)
   .put(protect, authorize('developer', 'admin'), updateTransaction)
   .delete(protect, authorize('developer', 'admin'), deleteTransaction);
 

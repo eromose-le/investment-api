@@ -34,6 +34,10 @@ const InvoiceSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Please add Invoice Due Date field']
     },
+    owner: {
+      type: String,
+      required: [true, "Please add Owner's Id"]
+    },
     createdAt: {
       type: Date,
       default: Date.now

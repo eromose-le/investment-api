@@ -22,12 +22,12 @@ router.use('/:coinId/transactions', transactionRouter);
 
 router
   .route('/')
-  .get(advancedResults(Coin, 'transactions'), getCoins)
+  .get(advancedResults(Coin, 'transaction'), getCoins)
   .post(protect, authorize('developer'), createCoin);
 
 router
   .route('/:id')
-  .get(getCoin)
+  .get(advancedResults(Coin, 'coin'), getCoin)
   .put(protect, authorize('developer'), updateCoin)
   .delete(protect, authorize('developer'), deleteCoin);
 
