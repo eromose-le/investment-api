@@ -160,7 +160,8 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
     'host'
   )}/api/v1/auth/resetpassword/${resetToken}`;
 
-  const message = `<h1>You are receiving this email because you (or someone else) has requested the reset of a password. Please make a PUT request to: </h1>\n\n ${resetUrl}`;
+  const message = `<h1>You are receiving this email because you (or someone else) has requested the reset of a password. <br /><hr />
+  Click <a href="http://localhost:3000/reset-password/${resetToken}" target="_self">Here</a> to login. <br /> <hr />Please make a PUT request to: </h1>\n\n ${resetUrl}`;
 
   try {
     await sendEmail({
