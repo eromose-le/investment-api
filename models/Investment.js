@@ -4,31 +4,17 @@ const InvestmentSchema = new mongoose.Schema({
   investmentTitle: {
     type: String
   },
-  investmentPlan: {
-    type: String
-  },
-  investorUsername: {
-    type: String
-  },
-  minBuy: {
-    type: String
-  },
-  withdrawable: {
-    type: String
-  },
-  investAmount: {
+  fullName: {
     type: String,
-    required: [true, 'Input amount you want to invest'],
-    default: null
+    required: [true, 'Input your Full Name']
+  },
+  userEmail: {
+    type: String,
+    required: [true, 'Input your Email Address']
   },
   createdAt: {
     type: Date,
     default: Date.now
-  },
-  user: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'User',
-    required: true
   }
 });
 

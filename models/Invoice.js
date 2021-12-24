@@ -8,7 +8,8 @@ const InvoiceSchema = new mongoose.Schema(
     },
     investorClass: {
       type: String,
-      required: [true, 'Please add Investor Class field']
+      required: [true, 'Please add Investor Class field'],
+      default: 'null'
     },
     tradeNature: {
       type: String,

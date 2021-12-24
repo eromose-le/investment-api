@@ -22,8 +22,8 @@ const { protect, authorize } = require('../middleware/auth');
 
 router
   .route('/')
-  .get(advancedResults(Investment, 'user'), getInvestments)
-  .post(protect, authorize('admin', 'user'), createInvestment);
+  .get(advancedResults(Investment), getInvestments)
+  .post(createInvestment);
 
 router
   .route('/:id')

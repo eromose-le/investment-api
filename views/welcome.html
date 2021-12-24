@@ -1,46 +1,4 @@
-const ErrorResponse = require('../utils/errorResponse');
-const asyncHandler = require('../middleware/async');
-const sendEmail = require('../utils/sendEmail');
-const Investment = require('../models/Investment');
-const { getMaxListeners } = require('../models/Investment');
-
-// @desc    Get all investments
-// @route   GET /api/v1/investments
-// @access  Public
-exports.getInvestments = asyncHandler(async (req, res, next) => {
-  res.status(200).json(res.advancedResults);
-});
-
-// @desc    Get single investment
-// @route   GET /api/v1/investment/:id
-// @access  Public
-exports.getInvestment = asyncHandler(async (req, res, next) => {
-  const investment = await Investment.findById(req.params.id);
-
-  if (!investment) {
-    return next(
-      new ErrorResponse(`Investment not found with id of ${req.params.id}`, 404)
-    );
-  }
-  res.status(200).json({
-    success: true,
-    data: investment
-  });
-});
-
-// @desc    Create new investment
-// @route   POST /api/v1/investments
-// @access  Private
-exports.createInvestment = asyncHandler(async (req, res, next) => {
-  var { investmentTitle, fullName, userEmail } = req.body;
-
-  const investment = await Investment.create({
-    investmentTitle,
-    fullName,
-    userEmail
-  });
-
-  const message = `<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
     <title></title>
@@ -118,7 +76,7 @@ exports.createInvestment = asyncHandler(async (req, res, next) => {
     "
   >
     <!-- HIDDEN PREHEADER TEXT -->
-    <!-- <div
+    <div
       style="
         display: none;
         font-size: 1px;
@@ -132,7 +90,7 @@ exports.createInvestment = asyncHandler(async (req, res, next) => {
       "
     >
       We're thrilled to have you here! Get ready to dive into your new account.
-    </div> -->
+    </div>
 
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
       <!-- LOGO -->
@@ -196,7 +154,7 @@ exports.createInvestment = asyncHandler(async (req, res, next) => {
             <tr>
               <td
                 bgcolor="#ffffff"
-                align="center"
+                align="left"
                 valign="top"
                 style="
                   padding: 40px 20px 20px 20px;
@@ -210,9 +168,9 @@ exports.createInvestment = asyncHandler(async (req, res, next) => {
                 "
               >
               <!-- [LOGO] -->
-              <!-- <a href="#"><img style="width: 15%" src="#" alt="logo" border="0"></a> -->
+              <!-- <a href="#><img style="width: 15%" src="#" alt="logo" border="0"></a> -->
                 <h1 style="font-size: 36px; font-weight: 600; margin: 0; padding: 10;">
-                  Investment Subscription <span style="color: #2c642b">Recieved!</span
+                  Thank you for joining us!
                 </h1>
               </td>
             </tr>
@@ -254,11 +212,13 @@ exports.createInvestment = asyncHandler(async (req, res, next) => {
                 "
               >
                 <p style="margin: 0; font-weight: 700">
-                  Hi ${fullName}
+                  Hi ${firstName}
                 </p>
                 <br />
                 <p style="margin: 0">
-                  We recieved your subscription request for <span style="color: #2c642b; font-weight: bold">${investmentTitle} </span> plan from your email: <span style="color: #2c642b; font-weight: bold">${userEmail}</span>, Please be patient while you hear from our team soon.
+                  <b style="color: #2c642b">Congratulations!</b> Your account with [website name] has been activated. Below is your wallet ID required alongside your choice to <a style="text-decoration: none; color: #2c642b" href="/login">
+                    sign in
+                  </a>
                 </p>
               </td>
             </tr>
@@ -279,7 +239,7 @@ exports.createInvestment = asyncHandler(async (req, res, next) => {
                             style="border-radius: 3px"
                             bgcolor="#2c642b"
                           >
-                            <!-- <p
+                            <p
                               target="_blank"
                               style="
                                 font-size: 18px;
@@ -293,8 +253,8 @@ exports.createInvestment = asyncHandler(async (req, res, next) => {
                                 border: 1px solid #2c642b;
                                 display: inline-block;
                               "
-                              >Your wallet ID :</p
-                            > -->
+                              >Your wallet ID : ${userWalletAddress}</p
+                            >
                           </td>
                         </tr>
                       </table>
@@ -317,14 +277,55 @@ exports.createInvestment = asyncHandler(async (req, res, next) => {
                   line-height: 25px;
                 "
               >
-                <!-- <p style="margin: 0">
+                <p style="margin: 0">
                   Make a profit today by investing with your broker, We guarantee you a successful trading/investment experience
+                </p>
+              </td>
+            </tr>
+            <!-- COPY -->
+            <tr>
+              <td
+                bgcolor="#ffffff"
+                align="left"
+                style="
+                  padding: 20px 30px 20px 30px;
+                  color: #666666;
+                  font-family: 'Lato', Helvetica, Arial, sans-serif;
+                  font-size: 12px;
+                  font-weight: 400;
+                  line-height: 25px;
+                "
+              >
+                <!-- <p style="margin: 0">
+                   <a
+                    href="${resetUrl}"
+                    target="_blank"
+                    style="color: #2c642b"
+                    >${resetUrl}</a 
+                  >
                 </p> -->
               </td>
             </tr>
             <!-- COPY -->
-            
-            <!-- COPY -->
+            <tr>
+              <td
+                bgcolor="#ffffff"
+                align="left"
+                style="
+                  padding: 0px 30px 20px 30px;
+                  color: #666666;
+                  font-family: 'Lato', Helvetica, Arial, sans-serif;
+                  font-size: 16px;
+                  font-weight: 400;
+                  line-height: 25px;
+                "
+              >
+                <!-- <p style="margin: 0">
+                  If you have any questions, just reply to this email—we're
+                  always happy to help out.
+                </p> -->
+              </td>
+            </tr>
             <!-- COPY -->
             <tr>
               <td
@@ -340,7 +341,7 @@ exports.createInvestment = asyncHandler(async (req, res, next) => {
                   line-height: 25px;
                 "
               >
-                <p style="margin: 5px 0 30px 0">Cheers,<br /><span style="color: #2c642b">[Website Name]</span</p>
+                <p style="margin: 20px 0 30px 0">Cheers,<br /><span style="color: #2c642b">[Website Name]</span</p>
               </td>
             </tr>
           </table>
@@ -369,98 +370,4 @@ exports.createInvestment = asyncHandler(async (req, res, next) => {
             
     </table>
   </body>
-</html>`;
-
-  const email = [`${userEmail}`, 'erons.a.gberaese@gmail.com'];
-
-  // email.toString();
-
-  try {
-    await sendEmail({
-      email,
-      subject: 'Investor Alert',
-      message
-    });
-
-    return res.status(200).json({ success: true, data: 'Email sent' });
-  } catch (err) {
-    return next(new ErrorResponse('Email could not be sent', 500));
-  }
-
-  res.status(201).json({
-    success: true,
-    msg: 'Created new Investment',
-    data: investment
-  });
-});
-
-// @desc    Update investment
-// @route   PUT /api/v1/investments/:id
-// @access  Private
-exports.updateInvestment = asyncHandler(async (req, res, next) => {
-  // Add user to req.body
-  req.body.user = req.user.id;
-
-  let investment = await Investment.findById(req.params.id);
-
-  if (!investment) {
-    return next(
-      new ErrorResponse(`Investment not found with id of ${req.params.id}`, 404)
-    );
-  }
-
-  // Make sure user is investment owner or admin
-  if (req.user.id && req.user.role !== 'admin') {
-    return next(
-      new ErrorResponse(
-        `User ${req.params.id} is not authorized to update this investment`,
-        401
-      )
-    );
-  }
-
-  investment = await Investment.findOneAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true
-  });
-
-  res.status(200).json({
-    success: true,
-    msg: `Updated investment ${req.params.id}`,
-    data: investment
-  });
-});
-
-// @desc    Delete investment
-// @route   DELETE /api/v1/investments/:id
-// @access  Private
-exports.deleteInvestment = asyncHandler(async (req, res, next) => {
-  // Add user to req.body
-  req.body.user = req.user.id;
-
-  const investment = await Investment.findById(req.params.id);
-
-  if (!investment) {
-    return next(
-      new ErrorResponse(`Investment not found with id of ${req.params.id}`, 404)
-    );
-  }
-
-  // Make sure user is investment owner
-  if (req.user.id && req.user.role !== 'admin') {
-    return next(
-      new ErrorResponse(
-        `User ${req.params.id} is not authorized to delete this investment`,
-        401
-      )
-    );
-  }
-
-  investment.remove();
-
-  res.status(200).json({
-    success: true,
-    msg: `Deleted investment ${req.params.id}`,
-    data: {}
-  });
-});
+</html>

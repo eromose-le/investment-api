@@ -25,7 +25,7 @@ router
     }),
     getTransactions
   )
-  .post(protect, createTransaction);
+  .post(protect, authorize('admin'), createTransaction);
 router
   .route('/:id')
   .get(protect, advancedResults(Transaction, 'coin'), getTransaction)
