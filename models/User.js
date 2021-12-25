@@ -12,7 +12,8 @@ const UserSchema = new mongoose.Schema({
     type: String
   },
   profilePhoto: {
-    type: String
+    type: String,
+    default: null
   },
   gender: {
     type: String,
